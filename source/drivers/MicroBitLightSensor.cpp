@@ -64,13 +64,23 @@ void MicroBitLightSensor::analogReady()
   */
 void MicroBitLightSensor::analogDisable()
 {
-    NRF_ADC->ENABLE = ADC_ENABLE_ENABLE_Disabled;
+  uint32_t was = NRF_ADC->ENABLE;
 
-    NRF_ADC->CONFIG = (ADC_CONFIG_RES_8bit << ADC_CONFIG_RES_Pos) |
-                      (ADC_CONFIG_INPSEL_SupplyTwoThirdsPrescaling << ADC_CONFIG_INPSEL_Pos) |
-                      (ADC_CONFIG_REFSEL_VBG                       << ADC_CONFIG_REFSEL_Pos) |
-                      (ADC_CONFIG_PSEL_Disabled                    << ADC_CONFIG_PSEL_Pos) |
-                      (ADC_CONFIG_EXTREFSEL_None                   << ADC_CONFIG_EXTREFSEL_Pos);
+  NRF_ADC->ENABLE = ADC_ENABLE_ENABLE_Disabled;
+
+  // NRF_ADC->CONFIG = (ADC_CONFIG_RES_8bit << ADC_CONFIG_RES_Pos) |
+  // (ADC_CONFIG_INPSEL_SupplyTwoThirdsPrescaling << ADC_CONFIG_INPSEL_Pos) |
+  // (ADC_CONFIG_REFSEL_VBG << ADC_CONFIG_REFSEL_Pos) |
+  // (ADC_CONFIG_PSEL_Disabled << ADC_CONFIG_PSEL_Pos) |
+  // (ADC_CONFIG_EXTREFSEL_None << ADC_CONFIG_EXTREFSEL_Pos);
+
+  NRF_ADC->CONFIG = (ADC_CONFIG_RES_10bit << ADC_CONFIG_RES_Pos) |
+                    (ADC_CONFIG_INPSEL_AnalogInputOneThirdPrescaling << ADC_CONFIG_INPSEL_Pos) |
+                    (ADC_CONFIG_REFSEL_SupplyOneThirdPrescaling << ADC_CONFIG_REFSEL_Pos) |
+                    (ADC_CONFIG_PSEL_Disabled << ADC_CONFIG_PSEL_Pos) |
+                    (ADC_CONFIG_EXTREFSEL_None << ADC_CONFIG_EXTREFSEL_Pos);
+
+  NRF_ADC->ENABLE = was;
 }
 
 /**
