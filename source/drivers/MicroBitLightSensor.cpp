@@ -64,6 +64,9 @@ void MicroBitLightSensor::analogReady()
   */
 void MicroBitLightSensor::analogDisable()
 {
+  // Fix for "Conflict between input.lightLevel and pins.analogReadPin on makecode #448"
+  // https://github.com/lancaster-university/microbit-dal/issues/448#issuecomment-514382347
+
   uint32_t was = NRF_ADC->ENABLE;
 
   NRF_ADC->ENABLE = ADC_ENABLE_ENABLE_Disabled;
