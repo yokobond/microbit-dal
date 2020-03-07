@@ -43,8 +43,8 @@ DEALINGS IN THE SOFTWARE.
   */
 void MicroBitLightSensor::analogReady()
 {
-  if (radioActive)
-    return; // Voltage may not be enough.
+    if (radioActive)
+        return; // Voltage may not be enough.
 
     this->results[chan] = this->sensePin->read_u16();
 
