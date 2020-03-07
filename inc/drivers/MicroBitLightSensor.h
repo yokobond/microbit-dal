@@ -48,7 +48,6 @@ class MicroBitLightSensor
 {
 
     bool radioActive;
-    void onRadioChanged(bool isActive);
 
     //contains the results from each section of the display
     int results[MICROBIT_LIGHT_SENSOR_CHAN_NUM];
@@ -95,6 +94,8 @@ class MicroBitLightSensor
       *            Defaults to microbitMatrixMap, defined in MicroBitMatrixMaps.h.
       */
     MicroBitLightSensor(const MatrixMap &map);
+
+    void onRadioChanged(bool isActive);
 
     /**
       * This method returns a summed average of the three sections of the display.

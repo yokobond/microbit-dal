@@ -113,8 +113,8 @@ MicroBitLightSensor::MicroBitLightSensor(const MatrixMap &map) :
     this->sensePin = NULL;
 
     BLE &ble = BLE::Instance();
-    ble->gap().onRadioNotification(this, &MicroBitLightSensor::onRadioChanged);
-    ble->gap().initRadioNotification();
+    ble.gap().onRadioNotification(this, &MicroBitLightSensor::onRadioChanged);
+    ble.gap().initRadioNotification();
 }
 
 /**
