@@ -32,6 +32,7 @@ DEALINGS IN THE SOFTWARE.
 #include "MicroBitConfig.h"
 #include "MicroBitLightSensor.h"
 #include "MicroBitDisplay.h"
+#include "ble/BLE.h"
 
 /**
   * After the startSensing method has been called, this method will be called
@@ -42,6 +43,9 @@ DEALINGS IN THE SOFTWARE.
   */
 void MicroBitLightSensor::analogReady()
 {
+  if (radioActive)
+    return; // Voltage may not be enough.
+
     this->results[chan] = this->sensePin->read_u16();
 
     analogDisable();
@@ -107,6 +111,18 @@ MicroBitLightSensor::MicroBitLightSensor(const MatrixMap &map) :
         EventModel::defaultEventBus->listen(MICROBIT_ID_DISPLAY, MICROBIT_DISPLAY_EVT_LIGHT_SENSE, this, &MicroBitLightSensor::startSensing, MESSAGE_BUS_LISTENER_IMMEDIATE);
 
     this->sensePin = NULL;
+
+    BLE &ble = BLE::Instance();
+    ble->gap().onRadioNotification(this, &MicroBitLightSensor::onRadioChanged);
+    ble->gap().initRadioNotification();
+}
+
+/**
+ * Invoked when radio active/inactive changed.
+ */
+void MicroBitLightSensor::onRadioChanged(bool active)
+{
+    radioActive = active;
 }
 
 /**

@@ -47,6 +47,8 @@ DEALINGS IN THE SOFTWARE.
 class MicroBitLightSensor
 {
 
+    bool radioActive;
+
     //contains the results from each section of the display
     int results[MICROBIT_LIGHT_SENSOR_CHAN_NUM];
 
